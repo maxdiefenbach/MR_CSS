@@ -1,0 +1,153 @@
+\documentclass[tikz]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz,pgfplots}
+\usepackage{grffile}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks,positioning,fit,shapes.geometric,arrows,external,matrix,backgrounds,spy}
+\usepgfplotslibrary{patchplots,groupplots,statistics}
+\usepackage{siunitx,xcolor,physics}
+\usepackage{sfmath}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  \definecolor{color0}{rgb}{0.12156862745098,0.466666666666667,0.705882352941177}
+  \definecolor{color1}{rgb}{1,0.498039215686275,0.0549019607843137}
+  \definecolor{color2}{rgb}{0.172549019607843,0.627450980392157,0.172549019607843}
+  \definecolor{color3}{rgb}{0.83921568627451,0.152941176470588,0.156862745098039}
+
+  \pgfplotsset{
+    every axis plot/.append style={no markers,line width=2pt},
+    every axis/.append style={
+      xticklabel style = {font=\large},
+      yticklabel style = {font=\large},
+      title style = {font=\large,yshift=0.2cm},
+      label style = {font=\large},
+      cycle list={color0,color1,color2,color3},
+    }
+  }
+
+  \begin{groupplot}[%
+    group style={group size=2 by 5,
+      horizontal sep=4cm,
+      vertical sep=1.5cm},
+    % width=6cm,
+    height=6cm,%
+    scale only axis,
+    xmin=-3.9, xmax=103.9,
+    xmajorgrids,
+    ymajorgrids,
+    xticklabels={},
+    ylabel style={yshift=0.8cm},
+    ]
+
+    \nextgroupplot[
+    ylabel={$\mat{I}^{-1}_{0 0} \enskip \widehat{=} \enskip$ magnitude var. $\sigma^{2}_{\varrho_w} \quad [\sigma^2]$},
+    ]
+    \addplot table[x=pdff,y=crlb0,col sep=comma] {wfi1r2s20.csv};
+    \addplot table[x=pdff,y=crlb0,col sep=comma] {wfi1r2s25.csv};
+    \addplot table[x=pdff,y=crlb0,col sep=comma] {wfi1r2s35.csv};
+    \addplot table[x=pdff,y=crlb0,col sep=comma] {wfi1r2s50.csv};
+
+
+    \nextgroupplot[
+    % ylabel={$\mat{I}^{-1}_{0 0} \enskip \widehat{=} \enskip$ magnitude var. $\sigma^{2}_{\varrho_w} p\quad [\sigma^2]$},
+    ]
+    \addplot table[x=pdff,y=crlb0,col sep=comma] {wfi2r2s20.csv};
+    \addplot table[x=pdff,y=crlb0,col sep=comma] {wfi2r2s25.csv};
+    \addplot table[x=pdff,y=crlb0,col sep=comma] {wfi2r2s35.csv};
+    \addplot table[x=pdff,y=crlb0,col sep=comma] {wfi2r2s50.csv};
+
+
+    \nextgroupplot[
+    ylabel={$\mat{I}^{-1}_{1 1} \enskip \widehat{=} \enskip$ magnitude var. $\sigma^{2}_{\varrho_f} \quad [\sigma^2]$},
+    ]
+    \addplot table[x=pdff,y=crlb1,col sep=comma] {wfi1r2s20.csv};
+    \addplot table[x=pdff,y=crlb1,col sep=comma] {wfi1r2s25.csv};
+    \addplot table[x=pdff,y=crlb1,col sep=comma] {wfi1r2s35.csv};
+    \addplot table[x=pdff,y=crlb1,col sep=comma] {wfi1r2s50.csv};
+
+
+
+    \nextgroupplot[
+    ]
+    \addplot table[x=pdff,y=crlb1,col sep=comma] {wfi2r2s20.csv};
+    \addplot table[x=pdff,y=crlb1,col sep=comma] {wfi2r2s25.csv};
+    \addplot table[x=pdff,y=crlb1,col sep=comma] {wfi2r2s35.csv};
+    \addplot table[x=pdff,y=crlb1,col sep=comma] {wfi2r2s50.csv};
+
+
+    \nextgroupplot[
+    ylabel={$\mat{I}^{-1}_{4 4} \enskip \widehat{=} \enskip$ field map var. $\sigma^{2}_{\omega} \quad [\sigma^2]$},
+    ]
+    \addplot table[x=pdff,y=crlb4,col sep=comma] {wfi1r2s20.csv};
+    \addplot table[x=pdff,y=crlb4,col sep=comma] {wfi1r2s25.csv};
+    \addplot table[x=pdff,y=crlb4,col sep=comma] {wfi1r2s35.csv};
+    \addplot table[x=pdff,y=crlb4,col sep=comma] {wfi1r2s50.csv};
+
+    \nextgroupplot[
+    ]
+    \addplot table[x=pdff,y=crlb4,col sep=comma] {wfi2r2s20.csv};
+    \addplot table[x=pdff,y=crlb4,col sep=comma] {wfi2r2s25.csv};
+    \addplot table[x=pdff,y=crlb4,col sep=comma] {wfi2r2s35.csv};
+    \addplot table[x=pdff,y=crlb4,col sep=comma] {wfi2r2s50.csv};
+
+
+    \nextgroupplot[
+    xlabel={PDFF [\si{\%}]},
+    ylabel={$\mat{I}^{-1}_{5 5} \enskip \widehat{=} \enskip$ relaxation rate var. $\sigma^{2}_{r} \quad [\sigma^2]$},
+    legend entries={%
+    {$R_2^*=\SI{20}{s^{-1}} \enskip \widehat{=} \enskip T_2^*=\SI{50}{ms}$},
+    {$R_2^*=\SI{25}{s^{-1}} \enskip \widehat{=} \enskip T_2^*=\SI{40}{ms}$},
+    {$R_2^*=\SI{35}{s^{-1}} \enskip \widehat{=} \enskip T_2^*\approx\SI{29}{ms}$},
+    {$R_2^*=\SI{30}{s^{-1}} \enskip \widehat{=} \enskip T_2^*=\SI{20}{ms}$}
+    },
+      legend style={
+      anchor=north,
+      at={(0.5,-0.5)},
+      nodes={inner ysep=0.2cm,inner xsep=0.3cm},
+    },
+    xticklabels={,0,20,40,60,80,100},
+    ]
+    \addplot table[x=pdff,y=crlb5,col sep=comma] {wfi1r2s20.csv};
+    \addplot table[x=pdff,y=crlb5,col sep=comma] {wfi1r2s25.csv};
+    \addplot table[x=pdff,y=crlb5,col sep=comma] {wfi1r2s35.csv};
+    \addplot table[x=pdff,y=crlb5,col sep=comma] {wfi1r2s50.csv};
+
+
+    \nextgroupplot[
+    ylabel={$\mat{I}^{-1}_{5 5} \enskip \widehat{=} \enskip$ water relaxation rate var. $\sigma^{2}_{r_w} \quad [\sigma^2]$},
+    ymin=-100, ymax=1E4,
+    ]
+    \addplot table[x=pdff,y=crlb5,col sep=comma] {wfi2r2s20.csv};
+    \addplot table[x=pdff,y=crlb5,col sep=comma] {wfi2r2s25.csv};
+    \addplot table[x=pdff,y=crlb5,col sep=comma] {wfi2r2s35.csv};
+    \addplot table[x=pdff,y=crlb5,col sep=comma] {wfi2r2s50.csv};
+
+
+    \nextgroupplot[group/empty plot]
+
+    \nextgroupplot[
+    xlabel={PDFF [\si{\%}]},
+    ylabel={$\mat{I}^{-1}_{6 6} \enskip \widehat{=} \enskip$ fat relaxation rate var. $\sigma^{2}_{r_f}$},
+    ymin=-100, ymax=1E4,
+    xticklabels={,0,20,40,60,80,100},
+    ]
+    \addplot table[x=pdff,y=crlb6,col sep=comma] {wfi2r2s20.csv};
+    \addplot table[x=pdff,y=crlb6,col sep=comma] {wfi2r2s25.csv};
+    \addplot table[x=pdff,y=crlb6,col sep=comma] {wfi2r2s35.csv};
+    \addplot table[x=pdff,y=crlb6,col sep=comma] {wfi2r2s50.csv};
+
+  \end{groupplot}
+
+  \node (title) at ($(group c1r1.center)+(0,4cm)$) {\bf\large single-\(R_2^{*}\) model};
+  \node (title) at ($(group c2r1.center)+(0,4cm)$) {\bf\large double-\(R_2^{*}\) model};
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,375 @@
+\documentclass[tikz]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz,pgfplots}
+\usepackage{grffile}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks,positioning,fit,shapes.geometric,arrows,external,matrix,backgrounds,spy}
+\usepgfplotslibrary{patchplots,groupplots,statistics}
+\usepackage{xcolor,physics}
+\usepackage[separate-uncertainty=true]{siunitx}
+\usepackage{sfmath}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+\begin{document}
+
+\pgfplotsset{
+  every axis plot/.append style={no markers,line width=2pt,
+    plot graphics/node/.append style={yscale=-1,anchor=north west}},
+  every axis/.append style={
+    xticklabel style = {font=\large},
+    yticklabel style = {font=\large},
+    title style = {font=\large},
+    label style = {font=\large},
+  }
+}
+
+\begin{tikzpicture}
+
+  \begin{groupplot}[%
+    group style={group size=2 by 7,
+      horizontal sep=6cm,
+      vertical sep=3cm,
+    },
+    tick align=outside,
+    tick pos=left,
+    xmin=0, xmax=200,
+    ymin=0, ymax=200,
+    xtick={0, 50, 100, 150, 200},
+    xticklabels={0.35, 0.85, 1.35, 1.85, 2.35},
+    ytick={0, 50, 100, 150, 200},
+    yticklabels={0.35, 0.85, 1.35, 1.85, 2.35},
+    % xlabel={$\Delta \text{TE} \quad [\si{ms}]$},
+    xticklabel style={yshift=-0.2cm},
+    % yticklabel style={xshift=-0.2cm},
+    axis on top,
+    xmajorgrids,
+    ymajorgrids,
+    colorbar,
+    colormap/viridis,
+    colorbar style={
+      tick align=inside,
+      tick pos=right,
+      % xshift=0.1cm,
+      yticklabel style={xshift=0.1cm},
+    },
+    ]
+
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=10,
+    ylabel={$\text{TE}_1 \quad [\si{ms}]$},
+    title={$\mat{I}^{-1}_{0 0} \quad \widehat{=} \quad$ magnitude variance $\sigma^{2}_{\varrho_w}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE1.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      141 0
+      142 0
+      140 0
+      143 0
+      141 1
+      139 0
+      142 1
+      140 1
+      143 1
+      144 0
+    };
+
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=10,
+    title={$\mat{I}^{-1}_{0 0} \quad \widehat{=} \quad$ magnitude variance $\sigma^{2}_{\varrho_w}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE2.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      68 0
+      69 0
+      67 0
+      70 0
+      68 1
+      67 1
+      71 0
+      69 1
+      66 0
+      70 1
+    };
+
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=10,
+    ylabel={$\text{TE}_1 \quad [\si{ms}]$},
+    title={$\mat{I}^{-1}_{1 1} \quad \widehat{=} \quad$ magnitude variance $\sigma^{2}_{\varrho_f}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE3.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      28 0
+      27 0
+      29 0
+      26 0
+      30 0
+      28 1
+      27 1
+      25 0
+      29 1
+      26 1
+    };
+
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=10,
+    title={$\mat{I}^{-1}_{1 1} \quad \widehat{=} \quad$ magnitude variance $\sigma^{2}_{\varrho_f}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE4.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      78 0
+      77 0
+      79 0
+      76 0
+      80 0
+      75 0
+      81 0
+      78 1
+      77 1
+      79 1
+    };
+
+
+    % \nextgroupplot[
+    % point meta min=0,
+    % point meta max=0.005,
+    % ylabel={$\text{TE}_1 \quad [\si{ms}]$},
+    % title={$\mat{I}^{-1}_{2 2} \quad \widehat{=} \quad$ phase variance $\sigma^{2}_{\phi_w}$},
+    % ]
+
+    % \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE5.png};
+
+    % \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    % table {%
+    %   141 0
+    %   142 0
+    %   140 0
+    %   143 0
+    %   141 1
+    %   139 0
+    %   142 1
+    %   140 1
+    %   143 1
+    %   144 0
+    % };
+
+
+    % \nextgroupplot[
+    % point meta min=0,
+    % point meta max=0.005,
+    % title={$\mat{I}^{-1}_{2 2} \quad \widehat{=} \quad$ phase variance $\sigma^{2}_{\phi_w}$},
+    % ]
+
+    % \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE6.png};
+
+    % \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    % table {%
+    %   90 0
+    %   91 0
+    %   89 0
+    %   133 0
+    %   92 0
+    %   132 0
+    %   134 0
+    %   88 0
+    %   131 0
+    %   93 0
+    % };
+
+
+    % \nextgroupplot[
+    % point meta min=0,
+    % point meta max=0.005,
+    % ylabel={$\text{TE}_1 \quad [\si{ms}]$},
+    % title={$\mat{I}^{-1}_{3 3} \quad \widehat{=} \quad$ phase variance $\sigma^{2}_{\phi_f}$},
+    % ]
+
+    % \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE7.png};
+
+    % \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    % table {%
+    %   28 0
+    %   27 0
+    %   29 0
+    %   26 0
+    %   30 0
+    %   28 1
+    %   27 1
+    %   25 0
+    %   29 1
+    %   26 1
+    % };
+
+
+    % \nextgroupplot[
+    % point meta min=0,
+    % point meta max=0.005,
+    % title={$\mat{I}^{-1}_{3 3} \quad \widehat{=} \quad$ phase variance $\sigma^{2}_{\phi_f}$},
+    % ]
+
+    % \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE8.png};
+
+    % \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    % table {%
+    %   30 0
+    %   31 0
+    %   29 0
+    %   32 0
+    %   28 0
+    %   30 1
+    %   31 1
+    %   29 1
+    %   33 0
+    %   32 1
+    % };
+
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=5,
+    ylabel={$\text{TE}_1 \quad [\si{ms}]$},
+    title={$\mat{I}^{-1}_{4 4} \quad \widehat{=} \quad$ field map variance $\sigma^{2}_{\omega}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE9.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      197 199
+      197 198
+      196 199
+      197 197
+      196 198
+      197 196
+      196 197
+      197 195
+      196 196
+      197 194
+    };
+
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=5,
+    title={$\mat{I}^{-1}_{4 4} \quad \widehat{=} \quad$ field map variance $\sigma^{2}_{\omega}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE10.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      197 198
+      197 197
+      197 199
+      198 194
+      197 196
+      198 195
+      198 193
+      196 199
+      198 196
+      198 192
+    };
+
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=100,
+    xlabel={$\Delta \text{TE} \quad [\si{ms}]$},
+    ylabel={$\text{TE}_1 \quad [\si{ms}]$},
+    title={$\mat{I}^{-1}_{5 5} \quad \widehat{=} \quad$ relaxation rate variance $\sigma^{2}_{r}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE11.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      197 199
+      197 198
+      196 199
+      197 197
+      196 198
+      197 196
+      196 197
+      197 195
+      196 196
+      197 194
+    };
+
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=100,
+    title={$\mat{I}^{-1}_{5 5} \quad \widehat{=} \quad$ relaxation rate variance $\sigma^{2}_{r_w}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE12.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      195 43
+      195 42
+      196 40
+      195 44
+      196 41
+      196 39
+      195 41
+      194 45
+      194 44
+      196 42
+    };
+
+    \nextgroupplot[group/empty plot,colorbar=false]
+
+    \nextgroupplot[
+    point meta min=0,
+    point meta max=1000,
+    xlabel={$\Delta \text{TE} \quad [\si{ms}]$},
+    ylabel={$\text{TE}_1 \quad [\si{ms}]$},
+    title={$\mat{I}^{-1}_{6 6} \quad \widehat{=} \quad$ relaxation rate variance $\sigma^{2}_{r_f}$},
+    ]
+
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=200, ymin=200, ymax=0] {crlb_dTE13.png};
+
+    \addplot [semithick, red, mark=*, mark size=3, mark options={solid}, only marks, forget plot]
+    table {%
+      122 0
+      121 0
+      123 0
+      122 1
+      120 0
+      121 1
+      123 1
+      124 0
+      122 2
+      120 1
+    };
+
+  \end{groupplot}
+
+  \node (title1) at ($(group c1r1.center)+(0,5cm)$) {\Large\bf single-\(R_2^{*}\) model};
+  \node (title2) at ($(group c2r1.center)+(0,5cm)$) {\Large\bf double-\(R_2^{*}\) model};
+
+\end{tikzpicture}
+
+\end{document}

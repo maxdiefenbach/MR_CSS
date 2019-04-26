@@ -1,0 +1,74 @@
+\documentclass[tikz]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz,pgfplots}
+\usepackage{grffile}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks,positioning,fit,shapes.geometric,arrows,external,matrix,backgrounds,spy}
+\usepgfplotslibrary{patchplots,groupplots,statistics}
+\usepackage{siunitx,xcolor,physics}
+\usepackage{sfmath}
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  \pgfplotsset{
+    % tick label style = {font=\sansmath\sffamily},
+    % every axis label = {font=\sansmath\sffamily},
+    % legend style = {font=\sansmath\sffamily},
+    title style={font=\large},
+    label style = {font=\large}
+  }
+
+  \begin{groupplot}[%
+    group style={group size=3 by 1,
+      horizontal sep=2cm,
+      vertical sep=0cm,
+    },
+    xmin=0, xmax=1,
+    ymin=0, ymax=1,
+    xtick=\empty,
+    ytick=\empty,
+    colorbar,
+    colormap/viridis,
+    colorbar style={ylabel={}},
+    % scale only axis,
+    title style={font=\Large\bf},
+    ]
+
+
+    \nextgroupplot[
+    title={chain length},
+    point meta min=20,
+    point meta max=30,
+    ]
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=1, ymin=1, ymax=0] {CL_PUD_UD1.png};
+    \addplot graphics [includegraphics cmd=\pgfimage,xmin=0, xmax=1, ymin=1, ymax=0] {CL_PUD_UD2.png};
+
+    \addplot graphics [xmin=0, xmax=1, ymin=1, ymax=0] {CL_PUD_UD1.png};
+
+
+    \nextgroupplot[
+    title={unsaturation degree},
+    point meta min=2,
+    point meta max=6,
+    ]
+
+    \addplot graphics [xmin=0, xmax=1, ymin=0, ymax=1] {CL_PUD_UD2.png};
+
+
+    \nextgroupplot[
+    title={poly-unsaturation degree},
+    point meta min=6,
+    point meta max=12,
+    ]
+
+    \addplot graphics [xmin=0, xmax=1, ymin=0, ymax=1] {CL_PUD_UD3.png};
+
+  \end{groupplot}
+
+\end{tikzpicture}
+
+\end{document}

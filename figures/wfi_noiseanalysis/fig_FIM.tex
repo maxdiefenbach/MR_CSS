@@ -1,0 +1,131 @@
+\documentclass[tikz]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz,pgfplots}
+\usepackage{grffile}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks,positioning,fit,shapes.geometric,arrows,external,matrix,backgrounds,spy}
+\usepgfplotslibrary{patchplots,groupplots,statistics}
+\usepackage{siunitx,xcolor,physics}
+\usepackage{sfmath}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+\begin{document}
+
+\definecolor{color0}{rgb}{0.12156862745098,0.466666666666667,0.705882352941177}
+\definecolor{color1}{rgb}{1,0.498039215686275,0.0549019607843137}
+\definecolor{color2}{rgb}{0.172549019607843,0.627450980392157,0.172549019607843}
+\definecolor{color3}{rgb}{0.83921568627451,0.152941176470588,0.156862745098039}
+
+\pgfplotsset{
+  every axis plot/.append style={no markers,line width=2pt},
+  every axis/.append style={
+    xticklabel style = {font=\large},
+    yticklabel style = {font=\large},
+    title style = {font=\large,yshift=0.2cm},
+    label style = {font=\large},
+    cycle list={color0,color1,color2,color3},
+  }
+}
+
+\begin{tikzpicture}
+
+  \begin{groupplot}[
+    group style={group size=2 by 3,
+      horizontal sep=4cm,
+      vertical sep=1.5cm},
+    % xlabel={PDFF [\%]},
+    % xticklabels={},
+    % tick align=outside,
+    % tick pos=left,
+    xmajorgrids,
+    ymajorgrids,
+    ]
+
+    \nextgroupplot[
+    title={$\tr \mat{I}^{-1}$},
+    ylabel={[$\sigma^2$]},
+    xticklabels={},
+    ]
+    \addplot table[x=pdff,y=trFinv,col sep=comma] {wfi1r2s20.csv};
+    \addplot table[x=pdff,y=trFinv,col sep=comma] {wfi1r2s25.csv};
+    \addplot table[x=pdff,y=trFinv,col sep=comma] {wfi1r2s35.csv};
+    \addplot table[x=pdff,y=trFinv,col sep=comma] {wfi1r2s50.csv};
+
+
+    \nextgroupplot[
+    title={$\tr \mat{I}^{-1}$},
+    ylabel={[$\sigma^2$]},
+    restrict y to domain*=0:1E3,
+    ymax=1000,
+    xticklabels={},
+    ]
+    \addplot table[x=pdff,y=trFinv,col sep=comma] {wfi2r2s20.csv};
+    \addplot table[x=pdff,y=trFinv,col sep=comma] {wfi2r2s25.csv};
+    \addplot table[x=pdff,y=trFinv,col sep=comma] {wfi2r2s35.csv};
+    \addplot table[x=pdff,y=trFinv,col sep=comma] {wfi2r2s50.csv};
+
+
+    \nextgroupplot[
+    title={$\tr \mat{I}$},
+    ylabel={[$\sigma^{-2}$]},
+    xticklabels={},
+    ]
+    \addplot table[x=pdff,y=trF,col sep=comma] {wfi1r2s20.csv};
+    \addplot table[x=pdff,y=trF,col sep=comma] {wfi1r2s25.csv};
+    \addplot table[x=pdff,y=trF,col sep=comma] {wfi1r2s35.csv};
+    \addplot table[x=pdff,y=trF,col sep=comma] {wfi1r2s50.csv};
+
+
+    \nextgroupplot[
+    title={$\tr \mat{I}$},
+    ylabel={[$\sigma^{-2}$]},
+    xticklabels={},
+    ]
+    \addplot table[x=pdff,y=trF,col sep=comma] {wfi2r2s20.csv};
+    \addplot table[x=pdff,y=trF,col sep=comma] {wfi2r2s25.csv};
+    \addplot table[x=pdff,y=trF,col sep=comma] {wfi2r2s35.csv};
+    \addplot table[x=pdff,y=trF,col sep=comma] {wfi2r2s50.csv};
+
+
+    \nextgroupplot[
+    title={$\det \mat{I}$},
+    ylabel={[$\sigma^{-8}$]},
+    xlabel={PDFF [\%]},
+    legend entries={%
+      {$R_2^*=\SI{20}{s^{-1}} \enskip \widehat{=} \enskip T_2^*=\SI{50}{ms}$},
+      {$R_2^*=\SI{25}{s^{-1}} \enskip \widehat{=} \enskip T_2^*=\SI{40}{ms}$},
+      {$R_2^*=\SI{35}{s^{-1}} \enskip \widehat{=} \enskip T_2^*\approx\SI{29}{ms}$},
+      {$R_2^*=\SI{30}{s^{-1}} \enskip \widehat{=} \enskip T_2^*=\SI{20}{ms}$}
+    },
+    legend style={
+      anchor=north,
+      at={(1.3,-0.35)},
+      nodes={inner ysep=0.2cm,inner xsep=0.3cm},
+    },
+    ]
+    \addplot table[x=pdff,y=detF,col sep=comma] {wfi1r2s20.csv};
+    \addplot table[x=pdff,y=detF,col sep=comma] {wfi1r2s25.csv};
+    \addplot table[x=pdff,y=detF,col sep=comma] {wfi1r2s35.csv};
+    \addplot table[x=pdff,y=detF,col sep=comma] {wfi1r2s50.csv};
+
+
+    \nextgroupplot[
+    title={$\det \mat{I}$},
+    ylabel={[$\sigma^{-8}$]},
+    xlabel={PDFF [\%]},
+    ]
+    \addplot table[x=pdff,y=detF,col sep=comma] {wfi2r2s20.csv};
+    \addplot table[x=pdff,y=detF,col sep=comma] {wfi2r2s25.csv};
+    \addplot table[x=pdff,y=detF,col sep=comma] {wfi2r2s35.csv};
+    \addplot table[x=pdff,y=detF,col sep=comma] {wfi2r2s50.csv};
+
+  \end{groupplot}
+
+  \node (title) at ($(group c1r1.center)+(0,5cm)$) {\bf\large single-\(R_2^{*}\) model};
+  \node (title) at ($(group c2r1.center)+(0,5cm)$) {\bf\large double-\(R_2^{*}\) model};
+
+\end{tikzpicture}
+
+\end{document}
